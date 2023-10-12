@@ -12,17 +12,18 @@ def home(request):
 
 
 def category(request, category_id):
-    recipes = Recipe.objects.filter(category=category_id, is_published=True).order_by('-id')
-    recipes = get_list_or_404(recipes)
+    recipes = get_list_or_404(
+        Recipe.objects.filter(category=category_id, is_published=True).order_by('-id')
+    )
     return render(request, 'recipes/pages/category.html', context={
         'recipes': recipes,
         'title': f'{recipes[0].category.name} - Category | '
     })
 
 
-def recipe(request, id):
-    recipe = get_object_or_404(Recipe, id=id)
+def recipe(request, recipe_id):
+    recipe_content = get_object_or_404(Recipe, id=recipe_id, is_published=True)
     return render(request, 'recipes/pages/recipe-view.html', context={
-        'recipe': recipe,
+        'recipe': recipe_content,
         'is_detail_page': True
     })
