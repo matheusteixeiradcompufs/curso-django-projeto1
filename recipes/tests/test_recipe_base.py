@@ -6,28 +6,8 @@ from django.test import TestCase
 from recipes.models import Category, Recipe, User
 
 
-def make_category(name_category='Category'):
-    return Category.objects.create(name=name_category)
-
-
-def make_author(
-        author_first_name='User',
-        author_last_name='Name',
-        author_username='username',
-        author_password='123456',
-        author_email='username@email.com',
-):
-    return User.objects.create_user(
-        first_name=author_first_name,
-        last_name=author_last_name,
-        username=author_username,
-        password=author_password,
-        email=author_email,
-    )
-
-
 def make_image():
-    with open("C:\\Users\\matheus.teixeira\\Pictures\\2002261230095343-04.jpg", "rb") as image_file:
+    with open("C:\\Users\\matheus.teixeira\\Pictures\\acesa.jpg", "rb") as image_file:
         image_bytes = image_file.read()
     # Crie uma imagem temporária em memória
     Image.open(io.BytesIO(image_bytes))
@@ -37,6 +17,24 @@ def make_image():
 class RecipeTestBase(TestCase):
     def setUp(self) -> None:
         return super().setUp()
+
+    def make_category(name_category='Category'):
+        return Category.objects.create(name=name_category)
+
+    def make_author(
+            author_first_name='User',
+            author_last_name='Name',
+            author_username='username',
+            author_password='123456',
+            author_email='username@email.com',
+    ):
+        return User.objects.create_user(
+            first_name=author_first_name,
+            last_name=author_last_name,
+            username=author_username,
+            password=author_password,
+            email=author_email,
+        )
 
     def make_recipe(self,
             recipe_category=None,
@@ -58,8 +56,8 @@ class RecipeTestBase(TestCase):
             recipe_author = {}
 
         return Recipe.objects.create(
-            category=make_category(**recipe_category),
-            author=make_author(**recipe_author),
+            category=self.make_category(**recipe_category),
+            author=self.make_author(**recipe_author),
             title=recipe_title,
             description=recipe_description,
             slug=recipe_slug,
