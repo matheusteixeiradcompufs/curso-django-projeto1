@@ -7,7 +7,7 @@ from recipes.models import Category, Recipe, User
 
 
 def make_image():
-    with open("C:\\Users\\matheus.teixeira\\Pictures\\2002261230095343-04.jpg", "rb") as image_file:
+    with open("C:\\Users\\matheus.teixeira\\Pictures\\acesa.jpg", "rb") as image_file:
         image_bytes = image_file.read()
     # Crie uma imagem temporária em memória
     Image.open(io.BytesIO(image_bytes))
