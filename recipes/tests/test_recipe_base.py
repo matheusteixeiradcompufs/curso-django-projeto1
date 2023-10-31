@@ -7,17 +7,14 @@ from recipes.models import Category, Recipe, User
 
 
 def make_image():
-    with open("C:\\Users\\matheus.teixeira\\Pictures\\2002261230095343-04.jpg", "rb") as image_file:
+    with open("C:\\Users\\matheus.teixeira\\Pictures\\acesa.jpg", "rb") as image_file:
         image_bytes = image_file.read()
     # Crie uma imagem temporária em memória
     Image.open(io.BytesIO(image_bytes))
     return SimpleUploadedFile("test_image.jpg", image_bytes, content_type="image/jpeg")
 
 
-class RecipeTestBase(TestCase):
-    def setUp(self) -> None:
-        return super().setUp()
-
+class RecipeMixin:
     def make_category(name_category='Category'):
         return Category.objects.create(name=name_category)
 
@@ -70,3 +67,18 @@ class RecipeTestBase(TestCase):
             is_published=recipe_is_published,
             cover=make_image()
         )
+
+    def make_recipe_in_batch(self, qtd=10):
+        recipes = []
+        for i in range(qtd):
+            kwargs = {'recipe_slug': f'r{i}', 'recipe_author': {'author_username': f'u{i}'}}
+            recipe = self.make_recipe(**kwargs)
+            recipes.append(recipe)
+        return recipes
+
+
+
+class RecipeTestBase(TestCase, RecipeMixin):
+    def setUp(self) -> None:
+        return super().setUp()
+
