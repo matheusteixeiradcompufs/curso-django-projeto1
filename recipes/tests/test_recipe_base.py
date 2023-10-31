@@ -71,11 +71,14 @@ class RecipeMixin:
     def make_recipe_in_batch(self, qtd=10):
         recipes = []
         for i in range(qtd):
-            kwargs = {'recipe_slug': f'r{i}', 'recipe_author': {'author_username': f'u{i}'}}
+            kwargs = {
+                'recipe_title': f'Recipe Title {i}',
+                'recipe_slug': f'r{i}',
+                'recipe_author': {'author_username': f'u{i}'}
+            }
             recipe = self.make_recipe(**kwargs)
             recipes.append(recipe)
         return recipes
-
 
 
 class RecipeTestBase(TestCase, RecipeMixin):

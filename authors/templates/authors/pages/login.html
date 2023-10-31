@@ -9,7 +9,7 @@
         {% if request.user.is_authenticated %}
             <div>
                 You are logged in with
-                {{ request.user.username }}
+                {{ request.user.username }}.
                 Please,
                 <form class="inline-form" action="{% url 'authors:logout' %}" method="post">
                     {% csrf_token %}
