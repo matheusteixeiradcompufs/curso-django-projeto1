@@ -2,7 +2,7 @@
             <div class="recipe recipe-list-item">
                 <div class="recipe-cover">
                     {% if not is_detail_page %}
-                        <a href="{% url 'recipes:recipe' recipe.id %}">
+                        <a href="{{ recipe.get_absolute_url }}">
                             <img src="{{ recipe.cover.url }}" alt="Temporário">
                         </a>
                     {% else %}
@@ -11,7 +11,7 @@
                 </div>
                 <div class="recipe-title-container">
                     <h2 class="recipe-title">
-                        <a href="{% url 'recipes:recipe' recipe.id %}">
+                        <a href="{{ recipe.get_absolute_url }}">
                             {{ recipe.title }}
                         </a>
                     </h2>
