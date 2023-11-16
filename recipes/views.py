@@ -21,9 +21,13 @@ class RecipeListViewBase(ListView):
     template_name = 'recipes/pages/home.html'
 
     def get_queryset(self, *args, **kwargs):
-        return super().get_queryset().filter(
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(
             is_published=True,
         )
+        qs = qs.select_related('author', 'category', 'author__profile')
+        qs = qs.prefetch_related('tags')
+        return qs
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
