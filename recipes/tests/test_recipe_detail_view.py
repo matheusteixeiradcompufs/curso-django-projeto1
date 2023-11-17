@@ -16,7 +16,7 @@ class RecipeDetailViewTest(RecipeTestBase):
 
     def test_recipe_detail_template_loads_the_correct_recipe(self):
         needed_title = 'This is a detail page - It load one recipe'
-        self.make_recipe(recipe_title=needed_title)
+        self.make_recipe(title=needed_title)
 
         response = self.client.get(reverse('recipes:recipe', args=(1, )))
         content = response.content.decode('utf-8')
@@ -24,7 +24,7 @@ class RecipeDetailViewTest(RecipeTestBase):
         self.assertIn(needed_title, content)
 
     def test_recipe_detail_template_load_recipes_not_published(self):
-        recipe = self.make_recipe(recipe_is_published=False)
+        recipe = self.make_recipe(is_published=False)
 
         response = self.client.get(reverse('recipes:recipe', args=(recipe.id, )))
 

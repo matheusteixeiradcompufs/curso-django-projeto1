@@ -15,56 +15,58 @@ def make_image():
 
 
 class RecipeMixin:
-    def make_category(name_category='Category'):
-        return Category.objects.create(name=name_category)
+    def make_category(self, name='Category'):
+        return Category.objects.create(name=name)
 
     def make_author(
-            author_first_name='User',
-            author_last_name='Name',
-            author_username='username',
-            author_password='123456',
-            author_email='username@email.com',
+            self,
+            first_name='User',
+            last_name='Name',
+            username='username',
+            password='123456',
+            email='username@email.com',
     ):
         return User.objects.create_user(
-            first_name=author_first_name,
-            last_name=author_last_name,
-            username=author_username,
-            password=author_password,
-            email=author_email,
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            password=password,
+            email=email,
         )
 
-    def make_recipe(self,
-            recipe_category=None,
-            recipe_author=None,
-            recipe_title='Titulo da Receita',
-            recipe_description='Descrição da Receita',
-            recipe_slug='titulo-da-receita',
-            recipe_preparation_time=10,
-            recipe_preparation_time_unit='Minutos',
-            recipe_servings=5,
-            recipe_servings_unit='Pessoas',
-            recipe_preparation_steps='Passos da Preparação',
-            recipe_preparation_steps_is_html=False,
-            recipe_is_published=True
+    def make_recipe(
+            self,
+            category_data=None,
+            author_data=None,
+            title='Titulo da Receita',
+            description='Descrição da Receita',
+            slug='titulo-da-receita',
+            preparation_time=10,
+            preparation_time_unit='Minutos',
+            servings=5,
+            servings_unit='Pessoas',
+            preparation_steps='Passos da Preparação',
+            preparation_steps_is_html=False,
+            is_published=True
         ):
-        if recipe_category is None:
-            recipe_category = {}
-        if recipe_author is None:
-            recipe_author = {}
+        if category_data is None:
+            category_data = {}
+        if author_data is None:
+            author_data = {}
 
         return Recipe.objects.create(
-            category=self.make_category(**recipe_category),
-            author=self.make_author(**recipe_author),
-            title=recipe_title,
-            description=recipe_description,
-            slug=recipe_slug,
-            preparation_time=recipe_preparation_time,
-            preparation_time_unit=recipe_preparation_time_unit,
-            servings=recipe_servings,
-            servings_unit=recipe_servings_unit,
-            preparation_steps=recipe_preparation_steps,
-            preparation_steps_is_html=recipe_preparation_steps_is_html,
-            is_published=recipe_is_published,
+            category=self.make_category(**category_data),
+            author=self.make_author(**author_data),
+            title=title,
+            description=description,
+            slug=slug,
+            preparation_time=preparation_time,
+            preparation_time_unit=preparation_time_unit,
+            servings=servings,
+            servings_unit=servings_unit,
+            preparation_steps=preparation_steps,
+            preparation_steps_is_html=preparation_steps_is_html,
+            is_published=is_published,
             cover=make_image()
         )
 
@@ -72,9 +74,9 @@ class RecipeMixin:
         recipes = []
         for i in range(qtd):
             kwargs = {
-                'recipe_title': f'Recipe Title {i}',
-                'recipe_slug': f'r{i}',
-                'recipe_author': {'author_username': f'u{i}'}
+                'title': f'Recipe Title {i}',
+                'slug': f'r{i}',
+                'author_data': {'username': f'u{i}'}
             }
             recipe = self.make_recipe(**kwargs)
             recipes.append(recipe)

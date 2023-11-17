@@ -69,12 +69,12 @@ class Recipe(models.Model):
         if not self.slug:
             self.slug = f'{slugify(self.title)}'
 
-            saved = super().save(*args, **kwargs)
+        saved = super().save(*args, **kwargs)
 
-            if self.cover:
-                try:
-                    self.resize_image(self.cover, 840)
-                except FileNotFoundError:
-                    ...
+        if self.cover:
+            try:
+                self.resize_image(self.cover, 840)
+            except FileNotFoundError:
+                ...
 
         return saved
